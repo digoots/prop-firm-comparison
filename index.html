@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prop Firm Comparison 2026 | Digoots</title>
+    <title>Prop Firm Comparison 2026 | C.OG</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -392,6 +392,7 @@
             <button class="filter-btn" data-filter="tradingview">TradingView ✓</button>
             <button class="filter-btn" data-filter="1-step">1-Step</button>
             <button class="filter-btn" data-filter="2-step">2-Step</button>
+            <button class="filter-btn" data-filter="3-step">3-Step</button>
             <button class="filter-btn" data-filter="instant">Instant</button>
             <button class="filter-btn" data-filter="static">Static DD</button>
         </div>
@@ -536,7 +537,7 @@ function renderTable(filteredData) {
         
         tr.innerHTML = `
             <td>${row.Rank || ''}</td>
-            <td>${isNewFirm ? `<span class="firm-name">${row.Firm}</span>` : ''}</td>
+            <td><span class="firm-name">${row.Firm}</span></td>
             <td class="program-name">${row.Program}</td>
             <td class="fee">${row.Fee10k}</td>
             <td class="fee">${row.Fee100k}</td>
@@ -580,27 +581,97 @@ function applyFilters() {
         
         if (!matchesSearch) return false;
         
+        const prog = row.Program.toLowerCase();
+        
         switch(currentFilter) {
             case 'tradingview':
                 return hasTradingView(row.Platforms) === 'yes';
             case '1-step':
-                return row.Program.toLowerCase().includes('1-step') || 
-                       row.Program.toLowerCase().includes('1-phase') ||
-                       row.Program.toLowerCase().includes('one');
+                return prog.includes('1-step') || 
+                       prog.includes('1-phase') ||
+                       prog.includes('one-step') ||
+                       prog.includes('alpha one') ||
+                       prog.includes('hyper growth');
             case '2-step':
-                return row.Program.toLowerCase().includes('2-step') || 
-                       row.Program.toLowerCase().includes('2-phase') ||
-                       row.Program.toLowerCase().includes('pro ');
+                return (prog.includes('2-step') || 
+                       prog.includes('2-phase') ||
+                       prog.includes('high stakes') ||
+                       prog.includes('alpha pro') ||
+                       prog.includes('alpha swing') ||
+                       prog.includes('stellar 2') ||
+                       prog.includes('stellar lite')) &&
+                       !prog.includes('3-step') &&
+                       !prog.includes('3-phase');
+            case '3-step':
+                return prog.includes('3-step') || 
+                       prog.includes('3-phase') ||
+                       prog.includes('bootcamp');
             case 'instant':
-                return row.Program.toLowerCase().includes('instant') ||
-                       row.Program.toLowerCase().includes('zero') ||
-                       row.Program.toLowerCase().includes('direct');
+                return prog.includes('instant') ||
+                       prog.includes('zero') ||
+                       prog.includes('direct');
             case 'static':
                 return row.DDType.toLowerCase().includes('static');
             default:
                 return true;
         }
     });
+    
+    // Apply sorting if active
+    if (sortColumn) {
+        filtered.sort((a, b) => {
+            let valA = '', valB = '';
+            
+            // Map sort column to data key
+            const colMap = {
+                'rank': 'Rank',
+                'firm': 'Firm',
+                'program': 'Program',
+                'fee10k': 'Fee10k',
+                'fee100k': 'Fee100k',
+                'target': 'Target',
+                'dailydd': 'DailyDD',
+                'maxdd': 'MaxDD',
+                'ddtype': 'DDType',
+                'split': 'Split',
+                'payout': 'Payout',
+                'leverage': 'Leverage',
+                'mindays': 'MinDays',
+                'timelimit': 'TimeLimit',
+                'consistency': 'Consistency',
+                'news': 'News',
+                'weekend': 'Weekend',
+                'eas': 'EAs',
+                'refund': 'Refund',
+                'platforms': 'Platforms',
+                'notes': 'Notes'
+            };
+            
+            const key = colMap[sortColumn];
+            if (key) {
+                valA = a[key] || '';
+                valB = b[key] || '';
+            }
+            
+            // Try to parse as numbers for numeric sorting
+            const numA = parseFloat(valA.replace(/[^0-9.-]/g, ''));
+            const numB = parseFloat(valB.replace(/[^0-9.-]/g, ''));
+            
+            if (!isNaN(numA) && !isNaN(numB)) {
+                return sortDirection === 'asc' ? numA - numB : numB - numA;
+            }
+            
+            // String comparison
+            const strA = valA.toString().toLowerCase();
+            const strB = valB.toString().toLowerCase();
+            
+            if (sortDirection === 'asc') {
+                return strA.localeCompare(strB);
+            } else {
+                return strB.localeCompare(strA);
+            }
+        });
+    }
     
     renderTable(filtered);
 }
