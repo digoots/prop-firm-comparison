@@ -394,6 +394,53 @@
         tbody tr {
             animation: fadeIn 0.3s ease forwards;
         }
+
+        /* Sentiment Badges */
+        .sentiment {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sentiment.excellent {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid #22c55e;
+        }
+
+        .sentiment.good {
+            background: rgba(132, 204, 22, 0.2);
+            color: #84cc16;
+            border: 1px solid #84cc16;
+        }
+
+        .sentiment.mixed {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+            border: 1px solid #eab308;
+        }
+
+        .sentiment.poor {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+            border: 1px solid #f97316;
+        }
+
+        .sentiment.bad {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+
+        .sentiment.unknown {
+            background: rgba(107, 114, 128, 0.2);
+            color: #6b7280;
+            border: 1px solid #6b7280;
+        }
     </style>
     
     <!-- Structured Data for Rich Results -->
@@ -465,6 +512,7 @@
                     <th data-sort="refund">Refund</th>
                     <th data-sort="platforms">Platforms</th>
                     <th data-sort="notes">Notes</th>
+                    <th data-sort="sentiment">Sentiment</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -479,39 +527,39 @@
 
     <script>
 const data = [
-  {"Rank":"1","Firm":"C.OG","Program":"Self-funded","Fee10k":"-","Fee100k":"-","Target":"N/A","DailyDD":"N/A","MaxDD":"N/A","DDType":"N/A","Split":"100%","Payout":"Anytime","Leverage":"Broker","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Yes","Weekend":"Yes","EAs":"Yes","Refund":"N/A","Platforms":"Any","Notes":"Benchmark only"},
-  {"Rank":"2","Firm":"FTMO","Program":"2-Step","Fee10k":"€155","Fee100k":"€540","Target":"P1:10% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→90%","Payout":"On-demand (14d)","Leverage":"1:100","MinDays":"4","TimeLimit":"∞","Consistency":"None","News":"2min restriction*","Weekend":"Swing only*","EAs":"Yes†","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader","Notes":"Standard acct restrictions"},
-  {"Rank":"","Firm":"FTMO","Program":"1-Step","Fee10k":"€185","Fee100k":"€640","Target":"10%","DailyDD":"3%","MaxDD":"6% trailing","DDType":"Trailing EOD","Split":"90%","Payout":"On-demand (14d)","Leverage":"1:100","MinDays":"2*","TimeLimit":"∞","Consistency":"50% Best Day","News":"2min restriction*","Weekend":"Swing only*","EAs":"Yes†","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader","Notes":"Best Day rule applies"},
-  {"Rank":"3","Firm":"The5ers","Program":"High Stakes (2-Step)","Fee10k":"$85","Fee100k":"$495","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3 profit","TimeLimit":"∞","Consistency":"3 profit days","News":"2min buffer","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Yes (1st)","Platforms":"MT5, cTrader","Notes":"Scaling to $4M"},
-  {"Rank":"","Firm":"The5ers","Program":"Bootcamp (3-Step)","Fee10k":"$95*","Fee100k":"$95*","Target":"6% each","DailyDD":"3%","MaxDD":"5%→4%","DDType":"Static","Split":"50%→100%","Payout":"Bi-weekly","Leverage":"1:10","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Bracket ban","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Pay rest","Platforms":"MT5, cTrader","Notes":"Strict SL required"},
-  {"Rank":"","Firm":"The5ers","Program":"Hyper Growth (1-Step)","Fee10k":"$260","Fee100k":"$260","Target":"10%","DailyDD":"3% pause","MaxDD":"6%","DDType":"Static","Split":"50%→100%","Payout":"Bi-weekly","Leverage":"1:30","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Bracket ban","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Yes","Platforms":"MT5, cTrader","Notes":"Doubles at 10%"},
-  {"Rank":"4","Firm":"FundingPips","Program":"2-Step Standard","Fee10k":"$36","Fee100k":"$289","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"35% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"No trading EAs"},
-  {"Rank":"","Firm":"FundingPips","Program":"2-Step Pro","Fee10k":"$29","Fee100k":"$239","Target":"P1:6% P2:6%","DailyDD":"3%","MaxDD":"6%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"45% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"Tightest 2-step DD"},
-  {"Rank":"","Firm":"FundingPips","Program":"1-Step","Fee10k":"$45","Fee100k":"$499","Target":"10%","DailyDD":"4%","MaxDD":"6%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"35% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"1.67:1 profit:DD"},
-  {"Rank":"","Firm":"FundingPips","Program":"Zero (Instant)","Fee10k":"$69","Fee100k":"$299","Target":"None","DailyDD":"3%","MaxDD":"5% trailing","DDType":"Trailing","Split":"95%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"7 profit","TimeLimit":"∞","Consistency":"15%","News":"5min buffer","Weekend":"NO","EAs":"Risk only","Refund":"No","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"1% float cap"},
-  {"Rank":"5","Firm":"FundedNext","Program":"Stellar 2-Step","Fee10k":"$59","Fee100k":"$549","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"90%→95%","Payout":"21d first","Leverage":"1:100","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader, Match","Notes":"15% challenge profit"},
-  {"Rank":"","Firm":"FundedNext","Program":"Stellar 1-Step","Fee10k":"$59","Fee100k":"$549","Target":"10%","DailyDD":"3%","MaxDD":"6%","DDType":"Static","Split":"90%→95%","Payout":"Every 5d","Leverage":"1:30","MinDays":"2","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader, Match","Notes":"Fastest payout"},
-  {"Rank":"","Firm":"FundedNext","Program":"Stellar Lite","Fee10k":"$49","Fee100k":"$449","Target":"P1:8% P2:4%","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"90%→95%","Payout":"21d first","Leverage":"1:100","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (3rd)","Platforms":"MT4/5, cTrader, Match","Notes":"Cheapest FN"},
-  {"Rank":"6","Firm":"FXIFY","Program":"2-Phase Standard","Fee10k":"$59","Fee100k":"$459","Target":"P1:10% P2:5%","DailyDD":"4%","MaxDD":"10% trail","DDType":"Trailing","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"On-demand 1st"},
-  {"Rank":"","Firm":"FXIFY","Program":"2-Phase Classic","Fee10k":"$59","Fee100k":"$459","Target":"P1:5% P2:10%","DailyDD":"4%","MaxDD":"10%","DDType":"Static","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"4","TimeLimit":"∞","Consistency":"25% funded","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"Static more forgiving"},
-  {"Rank":"","Firm":"FXIFY","Program":"1-Phase","Fee10k":"$89","Fee100k":"$549","Target":"10%","DailyDD":"3%","MaxDD":"6% trail","DDType":"Trailing","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"Single phase"},
-  {"Rank":"","Firm":"FXIFY","Program":"3-Phase","Fee10k":"$39","Fee100k":"$399","Target":"5% each","DailyDD":"5%","MaxDD":"5%","DDType":"Static","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"Cheapest FXIFY"},
-  {"Rank":"","Firm":"FXIFY","Program":"Instant","Fee10k":"$149","Fee100k":"$899","Target":"None","DailyDD":"8%","MaxDD":"8% trail","DDType":"Trailing","Split":"80%→90%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"NO","Weekend":"NO","EAs":"NO","Refund":"No","Platforms":"MT5, DXTrade, TradingView","Notes":"Most restricted"},
-  {"Rank":"","Firm":"FXIFY","Program":"Lightning","Fee10k":"$79","Fee100k":"$499","Target":"5%","DailyDD":"3%","MaxDD":"4% trail","DDType":"Trailing","Split":"80%→90%","Payout":"After 7d","Leverage":"1:30","MinDays":"3-7d","TimeLimit":"3-7 days","Consistency":"30%","News":"NO","Weekend":"Yes","EAs":"NO","Refund":"No","Platforms":"MT5, TradingView","Notes":"Mandatory SL"},
-  {"Rank":"7","Firm":"Alpha Capital","Program":"Alpha Pro 10% (2-Step)","Fee10k":"$57","Fee100k":"$497","Target":"P1:10% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%","Payout":"On-demand/Bi-wk","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"40% (OD)","News":"Yes","Weekend":"Swing only","EAs":"Yes","Refund":"No","Platforms":"MT5, cTrader, DXTrade, TradeLocker","Notes":"Best value Alpha"},
-  {"Rank":"","Firm":"Alpha Capital","Program":"Alpha One (1-Step)","Fee10k":"$67","Fee100k":"$297","Target":"10%","DailyDD":"4%","MaxDD":"6% trail","DDType":"Trailing","Split":"80%","Payout":"On-demand","Leverage":"1:50","MinDays":"1","TimeLimit":"∞","Consistency":"40% (OD)","News":"Yes","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"MT5, cTrader, DXTrade, TradeLocker","Notes":"Locks at 6%"},
-  {"Rank":"","Firm":"Alpha Capital","Program":"Alpha Swing (2-Step)","Fee10k":"$77","Fee100k":"$597","Target":"P1:10% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%","Payout":"On-demand","Leverage":"1:30","MinDays":"3","TimeLimit":"∞","Consistency":"40% (OD)","News":"Yes","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"MT5, cTrader, DXTrade, TradeLocker","Notes":"Weekend funded"},
-  {"Rank":"8","Firm":"GoatFunded","Program":"2-Step Standard","Fee10k":"$53","Fee100k":"$338","Target":"P1:8% P2:6%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"50% discount often"},
-  {"Rank":"","Firm":"GoatFunded","Program":"2-Step GOAT","Fee10k":"$36","Fee100k":"$458","Target":"P1:8% P2:6%","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"Tighter DD"},
-  {"Rank":"","Firm":"GoatFunded","Program":"2-Step PRO","Fee10k":"$109","Fee100k":"$458","Target":"P1:8% P2:6%","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"$3k profit cap"},
-  {"Rank":"","Firm":"GoatFunded","Program":"3-Step","Fee10k":"$65","Fee100k":"$665","Target":"6% each","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3/phase","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"Lowest targets"},
-  {"Rank":"","Firm":"GoatFunded","Program":"1-Step","Fee10k":"$48","Fee100k":"$398","Target":"10%","DailyDD":"4%","MaxDD":"6%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"Single phase"},
-  {"Rank":"","Firm":"GoatFunded","Program":"Instant GOAT","Fee10k":"$98","Fee100k":"$575","Target":"None","DailyDD":"3%","MaxDD":"6% trail","DDType":"Trailing","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"5 profit","TimeLimit":"∞","Consistency":"15%","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"TradeLocker, Match","Notes":"2% float cap"},
-  {"Rank":"","Firm":"GoatFunded","Program":"Instant PRO","Fee10k":"$158","Fee100k":"$898","Target":"None","DailyDD":"None","MaxDD":"4% trail","DDType":"Trailing","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"5 profit","TimeLimit":"∞","Consistency":"20%","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"TradeLocker, Match","Notes":"No daily DD"},
-  {"Rank":"9","Firm":"Ufunded","Program":"Instant","Fee10k":"£1,100 (45k)","Fee100k":"£2,200 (90k)","Target":"None","DailyDD":"None","MaxDD":"£2k (45k)","DDType":"Static","Split":"70%→90%","Payout":"On-demand","Leverage":"1:5","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Yes","Weekend":"Yes (reduced)","EAs":"Yes","Refund":"No","Platforms":"TradingView (own)","Notes":"Instant funding, no trailing"},
-  {"Rank":"10","Firm":"Topstep","Program":"Combine 50K","Fee10k":"$49/mo","Fee100k":"-","Target":"$3,000","DailyDD":"Scales","MaxDD":"$2k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Futures only"},
-  {"Rank":"","Firm":"Topstep","Program":"Combine 100K","Fee10k":"-","Fee100k":"$99/mo","Target":"$6,000","DailyDD":"Scales","MaxDD":"$3k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"First $10k 100%"},
-  {"Rank":"","Firm":"Topstep","Program":"Combine 150K","Fee10k":"-","Fee100k":"$149/mo","Target":"$9,000","DailyDD":"Scales","MaxDD":"$4.5k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Largest account"}
+  {"Rank":"1","Firm":"C.OG","Program":"Self-funded","Fee10k":"-","Fee100k":"-","Target":"N/A","DailyDD":"N/A","MaxDD":"N/A","DDType":"N/A","Split":"100%","Payout":"Anytime","Leverage":"Broker","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Yes","Weekend":"Yes","EAs":"Yes","Refund":"N/A","Platforms":"Any","Notes":"Benchmark only","Sentiment":"excellent"},
+  {"Rank":"2","Firm":"FTMO","Program":"2-Step","Fee10k":"€155","Fee100k":"€540","Target":"P1:10% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→90%","Payout":"On-demand (14d)","Leverage":"1:100","MinDays":"4","TimeLimit":"∞","Consistency":"None","News":"2min restriction*","Weekend":"Swing only*","EAs":"Yes†","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader","Notes":"Standard acct restrictions","Sentiment":"excellent"},
+  {"Rank":"","Firm":"FTMO","Program":"1-Step","Fee10k":"€185","Fee100k":"€640","Target":"10%","DailyDD":"3%","MaxDD":"6% trailing","DDType":"Trailing EOD","Split":"90%","Payout":"On-demand (14d)","Leverage":"1:100","MinDays":"2*","TimeLimit":"∞","Consistency":"50% Best Day","News":"2min restriction*","Weekend":"Swing only*","EAs":"Yes†","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader","Notes":"Best Day rule applies","Sentiment":"excellent"},
+  {"Rank":"3","Firm":"The5ers","Program":"High Stakes (2-Step)","Fee10k":"$85","Fee100k":"$495","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3 profit","TimeLimit":"∞","Consistency":"3 profit days","News":"2min buffer","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Yes (1st)","Platforms":"MT5, cTrader","Notes":"Scaling to $4M","Sentiment":"excellent"},
+  {"Rank":"","Firm":"The5ers","Program":"Bootcamp (3-Step)","Fee10k":"$95*","Fee100k":"$95*","Target":"6% each","DailyDD":"3%","MaxDD":"5%→4%","DDType":"Static","Split":"50%→100%","Payout":"Bi-weekly","Leverage":"1:10","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Bracket ban","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Pay rest","Platforms":"MT5, cTrader","Notes":"Strict SL required","Sentiment":"excellent"},
+  {"Rank":"","Firm":"The5ers","Program":"Hyper Growth (1-Step)","Fee10k":"$260","Fee100k":"$260","Target":"10%","DailyDD":"3% pause","MaxDD":"6%","DDType":"Static","Split":"50%→100%","Payout":"Bi-weekly","Leverage":"1:30","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Bracket ban","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Yes","Platforms":"MT5, cTrader","Notes":"Doubles at 10%","Sentiment":"excellent"},
+  {"Rank":"4","Firm":"FundingPips","Program":"2-Step Standard","Fee10k":"$36","Fee100k":"$289","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"35% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"No trading EAs","Sentiment":"mixed"},
+  {"Rank":"","Firm":"FundingPips","Program":"2-Step Pro","Fee10k":"$29","Fee100k":"$239","Target":"P1:6% P2:6%","DailyDD":"3%","MaxDD":"6%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"45% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"Tightest 2-step DD","Sentiment":"mixed"},
+  {"Rank":"","Firm":"FundingPips","Program":"1-Step","Fee10k":"$45","Fee100k":"$499","Target":"10%","DailyDD":"4%","MaxDD":"6%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"35% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"1.67:1 profit:DD","Sentiment":"mixed"},
+  {"Rank":"","Firm":"FundingPips","Program":"Zero (Instant)","Fee10k":"$69","Fee100k":"$299","Target":"None","DailyDD":"3%","MaxDD":"5% trailing","DDType":"Trailing","Split":"95%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"7 profit","TimeLimit":"∞","Consistency":"15%","News":"5min buffer","Weekend":"NO","EAs":"Risk only","Refund":"No","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"1% float cap","Sentiment":"mixed"},
+  {"Rank":"5","Firm":"FundedNext","Program":"Stellar 2-Step","Fee10k":"$59","Fee100k":"$549","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"90%→95%","Payout":"21d first","Leverage":"1:100","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader, Match","Notes":"15% challenge profit","Sentiment":"good"},
+  {"Rank":"","Firm":"FundedNext","Program":"Stellar 1-Step","Fee10k":"$59","Fee100k":"$549","Target":"10%","DailyDD":"3%","MaxDD":"6%","DDType":"Static","Split":"90%→95%","Payout":"Every 5d","Leverage":"1:30","MinDays":"2","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader, Match","Notes":"Fastest payout","Sentiment":"good"},
+  {"Rank":"","Firm":"FundedNext","Program":"Stellar Lite","Fee10k":"$49","Fee100k":"$449","Target":"P1:8% P2:4%","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"90%→95%","Payout":"21d first","Leverage":"1:100","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (3rd)","Platforms":"MT4/5, cTrader, Match","Notes":"Cheapest FN","Sentiment":"good"},
+  {"Rank":"6","Firm":"FXIFY","Program":"2-Phase Standard","Fee10k":"$59","Fee100k":"$459","Target":"P1:10% P2:5%","DailyDD":"4%","MaxDD":"10% trail","DDType":"Trailing","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"On-demand 1st","Sentiment":"good"},
+  {"Rank":"","Firm":"FXIFY","Program":"2-Phase Classic","Fee10k":"$59","Fee100k":"$459","Target":"P1:5% P2:10%","DailyDD":"4%","MaxDD":"10%","DDType":"Static","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"4","TimeLimit":"∞","Consistency":"25% funded","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"Static more forgiving","Sentiment":"good"},
+  {"Rank":"","Firm":"FXIFY","Program":"1-Phase","Fee10k":"$89","Fee100k":"$549","Target":"10%","DailyDD":"3%","MaxDD":"6% trail","DDType":"Trailing","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"Single phase","Sentiment":"good"},
+  {"Rank":"","Firm":"FXIFY","Program":"3-Phase","Fee10k":"$39","Fee100k":"$399","Target":"5% each","DailyDD":"5%","MaxDD":"5%","DDType":"Static","Split":"80%→90%","Payout":"Monthly","Leverage":"1:30","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"5min buffer","Weekend":"Yes","EAs":"Yes","Refund":"Yes (125%)","Platforms":"MT4/5, DXTrade, TradingView","Notes":"Cheapest FXIFY","Sentiment":"good"},
+  {"Rank":"","Firm":"FXIFY","Program":"Instant","Fee10k":"$149","Fee100k":"$899","Target":"None","DailyDD":"8%","MaxDD":"8% trail","DDType":"Trailing","Split":"80%→90%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"NO","Weekend":"NO","EAs":"NO","Refund":"No","Platforms":"MT5, DXTrade, TradingView","Notes":"Most restricted","Sentiment":"good"},
+  {"Rank":"","Firm":"FXIFY","Program":"Lightning","Fee10k":"$79","Fee100k":"$499","Target":"5%","DailyDD":"3%","MaxDD":"4% trail","DDType":"Trailing","Split":"80%→90%","Payout":"After 7d","Leverage":"1:30","MinDays":"3-7d","TimeLimit":"3-7 days","Consistency":"30%","News":"NO","Weekend":"Yes","EAs":"NO","Refund":"No","Platforms":"MT5, TradingView","Notes":"Mandatory SL","Sentiment":"good"},
+  {"Rank":"7","Firm":"Alpha Capital","Program":"Alpha Pro 10% (2-Step)","Fee10k":"$57","Fee100k":"$497","Target":"P1:10% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%","Payout":"On-demand/Bi-wk","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"40% (OD)","News":"Yes","Weekend":"Swing only","EAs":"Yes","Refund":"No","Platforms":"MT5, cTrader, DXTrade, TradeLocker","Notes":"Best value Alpha","Sentiment":"good"},
+  {"Rank":"","Firm":"Alpha Capital","Program":"Alpha One (1-Step)","Fee10k":"$67","Fee100k":"$297","Target":"10%","DailyDD":"4%","MaxDD":"6% trail","DDType":"Trailing","Split":"80%","Payout":"On-demand","Leverage":"1:50","MinDays":"1","TimeLimit":"∞","Consistency":"40% (OD)","News":"Yes","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"MT5, cTrader, DXTrade, TradeLocker","Notes":"Locks at 6%","Sentiment":"good"},
+  {"Rank":"","Firm":"Alpha Capital","Program":"Alpha Swing (2-Step)","Fee10k":"$77","Fee100k":"$597","Target":"P1:10% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%","Payout":"On-demand","Leverage":"1:30","MinDays":"3","TimeLimit":"∞","Consistency":"40% (OD)","News":"Yes","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"MT5, cTrader, DXTrade, TradeLocker","Notes":"Weekend funded","Sentiment":"good"},
+  {"Rank":"8","Firm":"GoatFunded","Program":"2-Step Standard","Fee10k":"$53","Fee100k":"$338","Target":"P1:8% P2:6%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"50% discount often","Sentiment":"good"},
+  {"Rank":"","Firm":"GoatFunded","Program":"2-Step GOAT","Fee10k":"$36","Fee100k":"$458","Target":"P1:8% P2:6%","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"Tighter DD","Sentiment":"good"},
+  {"Rank":"","Firm":"GoatFunded","Program":"2-Step PRO","Fee10k":"$109","Fee100k":"$458","Target":"P1:8% P2:6%","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"$3k profit cap","Sentiment":"good"},
+  {"Rank":"","Firm":"GoatFunded","Program":"3-Step","Fee10k":"$65","Fee100k":"$665","Target":"6% each","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3/phase","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"Lowest targets","Sentiment":"good"},
+  {"Rank":"","Firm":"GoatFunded","Program":"1-Step","Fee10k":"$48","Fee100k":"$398","Target":"10%","DailyDD":"4%","MaxDD":"6%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"Single phase","Sentiment":"good"},
+  {"Rank":"","Firm":"GoatFunded","Program":"Instant GOAT","Fee10k":"$98","Fee100k":"$575","Target":"None","DailyDD":"3%","MaxDD":"6% trail","DDType":"Trailing","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"5 profit","TimeLimit":"∞","Consistency":"15%","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"TradeLocker, Match","Notes":"2% float cap","Sentiment":"good"},
+  {"Rank":"","Firm":"GoatFunded","Program":"Instant PRO","Fee10k":"$158","Fee100k":"$898","Target":"None","DailyDD":"None","MaxDD":"4% trail","DDType":"Trailing","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"5 profit","TimeLimit":"∞","Consistency":"20%","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"TradeLocker, Match","Notes":"No daily DD","Sentiment":"good"},
+  {"Rank":"9","Firm":"Ufunded","Program":"Instant","Fee10k":"£1,100 (45k)","Fee100k":"£2,200 (90k)","Target":"None","DailyDD":"None","MaxDD":"£2k (45k)","DDType":"Static","Split":"70%→90%","Payout":"On-demand","Leverage":"1:5","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Yes","Weekend":"Yes (reduced)","EAs":"Yes","Refund":"No","Platforms":"TradingView (own)","Notes":"Instant funding, no trailing","Sentiment":"good"},
+  {"Rank":"10","Firm":"Topstep","Program":"Combine 50K","Fee10k":"$49/mo","Fee100k":"-","Target":"$3,000","DailyDD":"Scales","MaxDD":"$2k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Futures only","Sentiment":"good"},
+  {"Rank":"","Firm":"Topstep","Program":"Combine 100K","Fee10k":"-","Fee100k":"$99/mo","Target":"$6,000","DailyDD":"Scales","MaxDD":"$3k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"First $10k 100%","Sentiment":"good"},
+  {"Rank":"","Firm":"Topstep","Program":"Combine 150K","Fee10k":"-","Fee100k":"$149/mo","Target":"$9,000","DailyDD":"Scales","MaxDD":"$4.5k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Largest account","Sentiment":"good"}
 ];
 
 // TradingView detection
@@ -551,6 +599,17 @@ function renderTable(filteredData) {
                         tvStatus === 'partial' ? '<span class="tv-badge partial">TV ~</span>' :
                         '<span class="tv-badge no">—</span>';
         
+        const sentimentLabels = {
+            'excellent': 'Excellent',
+            'good': 'Good',
+            'mixed': 'Mixed',
+            'poor': 'Poor',
+            'bad': 'Bad',
+            'unknown': '?'
+        };
+        const sentimentClass = row.Sentiment || 'unknown';
+        const sentimentLabel = sentimentLabels[sentimentClass] || '?';
+        
         tr.innerHTML = `
             <td>${row.Rank || ''}</td>
             <td><span class="firm-name">${row.Firm}</span></td>
@@ -573,6 +632,7 @@ function renderTable(filteredData) {
             <td>${row.Refund}</td>
             <td>${row.Platforms} ${tvBadge}</td>
             <td title="${row.Notes}">${row.Notes.substring(0, 25)}${row.Notes.length > 25 ? '...' : ''}</td>
+            <td><span class="sentiment ${sentimentClass}">${sentimentLabel}</span></td>
         `;
         
         tr.style.animationDelay = `${i * 0.02}s`;
@@ -658,10 +718,20 @@ function applyFilters() {
                 'eas': 'EAs',
                 'refund': 'Refund',
                 'platforms': 'Platforms',
-                'notes': 'Notes'
+                'notes': 'Notes',
+                'sentiment': 'Sentiment'
             };
             
             const key = colMap[sortColumn];
+            
+            // Special handling for sentiment column (ordered ranking)
+            if (sortColumn === 'sentiment') {
+                const sentimentOrder = { 'excellent': 5, 'good': 4, 'mixed': 3, 'poor': 2, 'bad': 1, 'unknown': 0 };
+                const scoreA = sentimentOrder[a.Sentiment] || 0;
+                const scoreB = sentimentOrder[b.Sentiment] || 0;
+                return sortDirection === 'asc' ? scoreA - scoreB : scoreB - scoreA;
+            }
+            
             if (key) {
                 valA = a[key] || '';
                 valB = b[key] || '';
