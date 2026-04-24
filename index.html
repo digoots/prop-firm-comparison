@@ -166,6 +166,42 @@
             color: var(--bg-primary);
         }
 
+        /* Currency Selector */
+        .currency-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .currency-selector label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .currency-selector select {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            min-width: 90px;
+        }
+
+        .currency-selector select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .currency-selector select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
         /* Legend */
         .legend {
             background: var(--bg-secondary);
@@ -477,6 +513,14 @@
             <button class="filter-btn" data-filter="instant">Instant</button>
             <button class="filter-btn" data-filter="static">Static DD</button>
         </div>
+        <div class="currency-selector">
+            <label for="currency">Currency:</label>
+            <select id="currency">
+                <option value="USD">$ USD</option>
+                <option value="GBP">£ GBP</option>
+                <option value="EUR">€ EUR</option>
+            </select>
+        </div>
     </div>
 
     <div class="legend">
@@ -526,6 +570,100 @@
     </footer>
 
     <script>
+// ============================================
+// CURRENCY CONVERSION SYSTEM
+// ============================================
+
+let currentCurrency = 'USD';
+let exchangeRates = {
+    USD: 1,
+    GBP: 0.79,  // Fallback rates
+    EUR: 0.92
+};
+
+// Fetch live exchange rates
+async function fetchExchangeRates() {
+    try {
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const data = await response.json();
+        exchangeRates = {
+            USD: 1,
+            GBP: data.rates.GBP,
+            EUR: data.rates.EUR
+        };
+        console.log('Exchange rates loaded:', exchangeRates);
+    } catch (error) {
+        console.warn('Could not fetch live rates, using fallback:', error);
+    }
+}
+
+// Detect user's country and set default currency
+async function detectUserCurrency() {
+    try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        const country = data.country_code;
+        
+        // Map countries to currencies
+        const euroCountries = ['AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES'];
+        const gbpCountries = ['GB', 'UK'];
+        
+        if (gbpCountries.includes(country)) {
+            currentCurrency = 'GBP';
+        } else if (euroCountries.includes(country)) {
+            currentCurrency = 'EUR';
+        } else {
+            currentCurrency = 'USD';
+        }
+        
+        document.getElementById('currency').value = currentCurrency;
+        console.log('Detected country:', country, '-> Currency:', currentCurrency);
+    } catch (error) {
+        console.warn('Could not detect location, defaulting to USD:', error);
+    }
+}
+
+// Convert price from original currency to target currency
+function convertPrice(priceStr, targetCurrency) {
+    if (!priceStr || priceStr === '-' || priceStr === 'N/A' || priceStr === '?') return priceStr;
+    
+    // Extract number and original currency symbol
+    const match = priceStr.match(/^([€£$]?)([\d,]+(?:\.\d+)?)(.*)/);
+    if (!match) return priceStr;
+    
+    const [, symbol, numStr, suffix] = match;
+    const num = parseFloat(numStr.replace(/,/g, ''));
+    if (isNaN(num)) return priceStr;
+    
+    // Determine source currency
+    let sourceCurrency = 'USD';
+    if (symbol === '€') sourceCurrency = 'EUR';
+    else if (symbol === '£') sourceCurrency = 'GBP';
+    
+    // Convert to USD first, then to target
+    const inUSD = num / exchangeRates[sourceCurrency];
+    const converted = inUSD * exchangeRates[targetCurrency];
+    
+    // Format with target currency symbol
+    const symbols = { USD: '$', GBP: '£', EUR: '€' };
+    const formatted = Math.round(converted).toLocaleString();
+    
+    return `${symbols[targetCurrency]}${formatted}${suffix}`;
+}
+
+// Initialize currency system
+async function initCurrency() {
+    await fetchExchangeRates();
+    await detectUserCurrency();
+    applyFilters(); // Re-render with correct currency
+}
+
+// Currency change handler
+document.getElementById('currency').addEventListener('change', (e) => {
+    currentCurrency = e.target.value;
+    applyFilters();
+});
+
 const data = [
   {"Rank":"1","Firm":"C.OG","Program":"Self-funded","Fee10k":"-","Fee100k":"-","Target":"N/A","DailyDD":"N/A","MaxDD":"N/A","DDType":"N/A","Split":"100%","Payout":"Anytime","Leverage":"Broker","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Yes","Weekend":"Yes","EAs":"Yes","Refund":"N/A","Platforms":"Any","Notes":"Benchmark only","Sentiment":"excellent"},
   {"Rank":"2","Firm":"FTMO","Program":"2-Step","Fee10k":"€155","Fee100k":"€540","Target":"P1:10% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→90%","Payout":"On-demand (14d)","Leverage":"1:100","MinDays":"4","TimeLimit":"∞","Consistency":"None","News":"2min restriction*","Weekend":"Swing only*","EAs":"Yes†","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader","Notes":"Standard acct restrictions","Sentiment":"excellent"},
@@ -533,7 +671,7 @@ const data = [
   {"Rank":"3","Firm":"The5ers","Program":"High Stakes (2-Step)","Fee10k":"$85","Fee100k":"$495","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3 profit","TimeLimit":"∞","Consistency":"3 profit days","News":"2min buffer","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Yes (1st)","Platforms":"MT5, cTrader","Notes":"Scaling to $4M","Sentiment":"excellent"},
   {"Rank":"","Firm":"The5ers","Program":"Bootcamp (3-Step)","Fee10k":"$95*","Fee100k":"$95*","Target":"6% each","DailyDD":"3%","MaxDD":"5%→4%","DDType":"Static","Split":"50%→100%","Payout":"Bi-weekly","Leverage":"1:10","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Bracket ban","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Pay rest","Platforms":"MT5, cTrader","Notes":"Strict SL required","Sentiment":"excellent"},
   {"Rank":"","Firm":"The5ers","Program":"Hyper Growth (1-Step)","Fee10k":"$260","Fee100k":"$260","Target":"10%","DailyDD":"3% pause","MaxDD":"6%","DDType":"Static","Split":"50%→100%","Payout":"Bi-weekly","Leverage":"1:30","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Bracket ban","Weekend":"Yes (swap)","EAs":"Yes","Refund":"Yes","Platforms":"MT5, cTrader","Notes":"Doubles at 10%","Sentiment":"excellent"},
-  {"Rank":"4","Firm":"Ufunded","Program":"Instant","Fee10k":"£1,100 (45k)","Fee100k":"£2,200 (90k)","Target":"None","DailyDD":"None","MaxDD":"£2k (45k)","DDType":"Static","Split":"70%→90%","Payout":"On-demand","Leverage":"1:5","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Yes","Weekend":"Yes (reduced)","EAs":"Yes","Refund":"No","Platforms":"TradingView (own)","Notes":"Instant funding, no trailing","Sentiment":"good"},
+  {"Rank":"4","Firm":"Ufunded","Program":"Instant","Fee10k":"$1,500 (45k)","Fee100k":"$3,000 (90k)","Target":"None","DailyDD":"None","MaxDD":"$2.7k (45k)","DDType":"Static","Split":"70%→90%","Payout":"On-demand","Leverage":"1:5","MinDays":"0","TimeLimit":"∞","Consistency":"None","News":"Yes","Weekend":"Yes (reduced)","EAs":"Yes","Refund":"No","Platforms":"TradingView (own)","Notes":"Instant funding, no trailing","Sentiment":"unknown"},
   {"Rank":"5","Firm":"FundedNext","Program":"Stellar 2-Step","Fee10k":"$59","Fee100k":"$549","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"90%→95%","Payout":"21d first","Leverage":"1:100","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader, Match","Notes":"15% challenge profit","Sentiment":"good"},
   {"Rank":"","Firm":"FundedNext","Program":"Stellar 1-Step","Fee10k":"$59","Fee100k":"$549","Target":"10%","DailyDD":"3%","MaxDD":"6%","DDType":"Static","Split":"90%→95%","Payout":"Every 5d","Leverage":"1:30","MinDays":"2","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (1st)","Platforms":"MT4/5, cTrader, Match","Notes":"Fastest payout","Sentiment":"good"},
   {"Rank":"","Firm":"FundedNext","Program":"Stellar Lite","Fee10k":"$49","Fee100k":"$449","Target":"P1:8% P2:4%","DailyDD":"4%","MaxDD":"8%","DDType":"Static","Split":"90%→95%","Payout":"21d first","Leverage":"1:100","MinDays":"5","TimeLimit":"∞","Consistency":"None","News":"40% clawback","Weekend":"Yes","EAs":"Yes (+fee)","Refund":"Yes (3rd)","Platforms":"MT4/5, cTrader, Match","Notes":"Cheapest FN","Sentiment":"good"},
@@ -553,13 +691,13 @@ const data = [
   {"Rank":"","Firm":"GoatFunded","Program":"1-Step","Fee10k":"$48","Fee100k":"$398","Target":"10%","DailyDD":"4%","MaxDD":"6%","DDType":"Static","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"None","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"Yes (4th)","Platforms":"TradeLocker, Match","Notes":"Single phase","Sentiment":"good"},
   {"Rank":"","Firm":"GoatFunded","Program":"Instant GOAT","Fee10k":"$98","Fee100k":"$575","Target":"None","DailyDD":"3%","MaxDD":"6% trail","DDType":"Trailing","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"5 profit","TimeLimit":"∞","Consistency":"15%","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"TradeLocker, Match","Notes":"2% float cap","Sentiment":"good"},
   {"Rank":"","Firm":"GoatFunded","Program":"Instant PRO","Fee10k":"$158","Fee100k":"$898","Target":"None","DailyDD":"None","MaxDD":"4% trail","DDType":"Trailing","Split":"80%→100%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"5 profit","TimeLimit":"∞","Consistency":"20%","News":"1% cap","Weekend":"Yes","EAs":"Yes","Refund":"No","Platforms":"TradeLocker, Match","Notes":"No daily DD","Sentiment":"good"},
-  {"Rank":"9","Firm":"FundingPips","Program":"2-Step Standard","Fee10k":"$36","Fee100k":"$289","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"35% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"No trading EAs","Sentiment":"mixed"},
+  {"Rank":"9","Firm":"Topstep","Program":"Combine 50K","Fee10k":"$49/mo","Fee100k":"-","Target":"$3,000","DailyDD":"Scales","MaxDD":"$2k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Futures only","Sentiment":"good"},
+  {"Rank":"","Firm":"Topstep","Program":"Combine 100K","Fee10k":"-","Fee100k":"$99/mo","Target":"$6,000","DailyDD":"Scales","MaxDD":"$3k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"First $10k 100%","Sentiment":"good"},
+  {"Rank":"","Firm":"Topstep","Program":"Combine 150K","Fee10k":"-","Fee100k":"$149/mo","Target":"$9,000","DailyDD":"Scales","MaxDD":"$4.5k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Largest account","Sentiment":"good"},
+  {"Rank":"10","Firm":"FundingPips","Program":"2-Step Standard","Fee10k":"$36","Fee100k":"$289","Target":"P1:8% P2:5%","DailyDD":"5%","MaxDD":"10%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"35% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"No trading EAs","Sentiment":"mixed"},
   {"Rank":"","Firm":"FundingPips","Program":"2-Step Pro","Fee10k":"$29","Fee100k":"$239","Target":"P1:6% P2:6%","DailyDD":"3%","MaxDD":"6%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"45% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"Tightest 2-step DD","Sentiment":"mixed"},
   {"Rank":"","Firm":"FundingPips","Program":"1-Step","Fee10k":"$45","Fee100k":"$499","Target":"10%","DailyDD":"4%","MaxDD":"6%","DDType":"Static","Split":"60%→100%","Payout":"Weekly","Leverage":"1:100","MinDays":"3","TimeLimit":"∞","Consistency":"35% (OD)","News":"Restricted*","Weekend":"Yes","EAs":"Risk only","Refund":"Yes (4th)","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"1.67:1 profit:DD","Sentiment":"mixed"},
-  {"Rank":"","Firm":"FundingPips","Program":"Zero (Instant)","Fee10k":"$69","Fee100k":"$299","Target":"None","DailyDD":"3%","MaxDD":"5% trailing","DDType":"Trailing","Split":"95%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"7 profit","TimeLimit":"∞","Consistency":"15%","News":"5min buffer","Weekend":"NO","EAs":"Risk only","Refund":"No","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"1% float cap","Sentiment":"mixed"},
-  {"Rank":"10","Firm":"Topstep","Program":"Combine 50K","Fee10k":"$49/mo","Fee100k":"-","Target":"$3,000","DailyDD":"Scales","MaxDD":"$2k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Futures only","Sentiment":"good"},
-  {"Rank":"","Firm":"Topstep","Program":"Combine 100K","Fee10k":"-","Fee100k":"$99/mo","Target":"$6,000","DailyDD":"Scales","MaxDD":"$3k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"First $10k 100%","Sentiment":"good"},
-  {"Rank":"","Firm":"Topstep","Program":"Combine 150K","Fee10k":"-","Fee100k":"$149/mo","Target":"$9,000","DailyDD":"Scales","MaxDD":"$4.5k EOD","DDType":"EOD Trail","Split":"100%→90%","Payout":"5 wins req","Leverage":"Contracts","MinDays":"5 wins","TimeLimit":"∞ (sub)","Consistency":"40%","News":"Yes","Weekend":"NO","EAs":"No","Refund":"+$149 act","Platforms":"TopstepX (TradingView)","Notes":"Largest account","Sentiment":"good"}
+  {"Rank":"","Firm":"FundingPips","Program":"Zero (Instant)","Fee10k":"$69","Fee100k":"$299","Target":"None","DailyDD":"3%","MaxDD":"5% trailing","DDType":"Trailing","Split":"95%","Payout":"Bi-weekly","Leverage":"1:50","MinDays":"7 profit","TimeLimit":"∞","Consistency":"15%","News":"5min buffer","Weekend":"NO","EAs":"Risk only","Refund":"No","Platforms":"MT5, cTrader, Match, TradeLocker","Notes":"1% float cap","Sentiment":"mixed"}
 ];
 
 // TradingView detection
@@ -610,12 +748,16 @@ function renderTable(filteredData) {
         const sentimentClass = row.Sentiment || 'unknown';
         const sentimentLabel = sentimentLabels[sentimentClass] || '?';
         
+        // Convert fees to selected currency
+        const fee10k = convertPrice(row.Fee10k, currentCurrency);
+        const fee100k = convertPrice(row.Fee100k, currentCurrency);
+        
         tr.innerHTML = `
             <td>${row.Rank || ''}</td>
             <td><span class="firm-name">${row.Firm}</span></td>
             <td class="program-name">${row.Program}</td>
-            <td class="fee">${row.Fee10k}</td>
-            <td class="fee">${row.Fee100k}</td>
+            <td class="fee">${fee10k}</td>
+            <td class="fee">${fee100k}</td>
             <td>${row.Target}</td>
             <td>${row.DailyDD}</td>
             <td>${row.MaxDD}</td>
@@ -795,8 +937,9 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
     });
 });
 
-// Initial render
-renderTable(data);
+// Initial render with currency detection
+renderTable(data); // Show table immediately with default currency
+initCurrency();    // Then fetch rates and detect location, re-render
     </script>
 </body>
 </html>
