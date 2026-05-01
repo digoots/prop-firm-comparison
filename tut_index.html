@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prop Firm Comparison 2026 | Best Prop Trading Firms Compared | Digoots (UPDATED)</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Compare 13+ prop trading firms and 45+ programs side-by-side. Fees, profit splits, drawdown rules, TradingView support, and more. Updated April 2026 with latest rules. Includes breach mitigation guide for beginners.">
+    <meta name="keywords" content="prop firm comparison, best prop firms 2026, FTMO, FundedNext, The5ers, FundingPips, FXIFY, GoatFunded, Alpha Capital, Topstep, OneFunded, BrightFunded, prop trading, funded trader, forex prop firm, TradingView prop firm">
+    <meta name="author" content="Digoots">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Prop Firm Comparison 2026 | 13+ Firms, 45+ Programs Compared (UPDATED)">
+    <meta property="og:description" content="Compare prop trading firms side-by-side: fees, profit splits, drawdown rules, platforms, and hidden risks. Updated April 2026 with latest rule changes. Includes breach mitigation guide.">
+    <meta property="og:site_name" content="Digoots">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Prop Firm Comparison 2026 | Best Prop Trading Firms (UPDATED)">
+    <meta name="twitter:description" content="Compare 13+ prop firms and 45+ programs. Fees, splits, drawdown rules. Updated April 2026 with Topstep 90/10 change and breach prevention guide.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-hover: #22222e;
+            --text-primary: #e8e8ec;
+            --text-secondary: #9898a8;
+            --text-muted: #686878;
+            --accent-gold: #d4a853;
+            --accent-green: #34d399;
+            --accent-red: #f87171;
+            --accent-blue: #60a5fa;
+            --accent-purple: #a78bfa;
+            --border-color: #2a2a3a;
+            --warning-bg: rgba(245, 158, 11, 0.15);
+            --danger-bg: rgba(239, 68, 68, 0.1);
+            --success-bg: rgba(34, 197, 94, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
+            text-align: center;
+        }
+
+        .last-updated {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .update-badge {
+            background: #10b98120;
+            border: 1px solid #10b98160;
+            border-radius: 40px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #a7f3d0;
+            display: inline-block;
+            margin-left: 1rem;
+        }
+
+        .controls {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-primary);
+        }
+
+        .currency-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .currency-selector label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .currency-selector select {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .legend {
+            background: var(--bg-secondary);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.restricted { background: var(--accent-red); }
+        .legend-dot.highlight { background: var(--accent-gold); }
+
+        .table-container {
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            background: var(--bg-secondary);
+            padding: 0.75rem 0.5rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+            white-space: nowrap;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        th:hover {
+            background: var(--bg-hover);
+        }
+
+        th.sorted-asc::after { content: ' ▲'; }
+        th.sorted-desc::after { content: ' ▼'; }
+
+        td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        tr.firm-header td {
+            background: var(--bg-card);
+            border-top: 2px solid var(--accent-gold);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        tr.firm-header .firm-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .firm-name {
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+        }
+
+        .program-name {
+            color: var(--text-primary);
+        }
+
+        .cell-restricted {
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+
+        .cell-good {
+            color: var(--accent-green);
+        }
+
+        .fee {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        .sentiment {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .sentiment.excellent {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid #22c55e;
+        }
+
+        .sentiment.good {
+            background: rgba(132, 204, 22, 0.2);
+            color: #84cc16;
+            border: 1px solid #84cc16;
+        }
+
+        .sentiment.mixed {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+            border: 1px solid #eab308;
+        }
+
+        /* Guide Table Styles */
+        .guide-section {
+            margin: 2rem 1rem 1rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .guide-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .guide-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .guide-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .guide-table th {
+            background: var(--bg-primary);
+            padding: 1rem 0.75rem;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .guide-table td {
+            padding: 0.9rem 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .guide-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 0.3rem 0.6rem;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+        }
+
+        .warning-text {
+            color: #f97316;
+            font-size: 0.7rem;
+        }
+
+        .danger-text {
+            color: #ef4444;
+            font-size: 0.7rem;
+        }
+
+        .success-text {
+            color: #22c55e;
+            font-size: 0.7rem;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .footer .disclaimer {
+            font-size: 0.7rem;
+            color: #8a92b0;
+            max-width: 800px;
+            margin: 0.75rem auto 0;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            table { font-size: 0.65rem; }
+            .guide-table th, .guide-table td { font-size: 0.7rem; padding: 0.5rem; }
+            .guide-section { padding: 1rem; margin: 1rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="last-updated">📅 Updated April 30, 2026 <span class="update-badge">✅ VERIFIED: Topstep 90/10 • OneFunded • BrightFunded • RebelsFunding</span></div>
+    </div>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search firms, programs, platforms...">
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="1-step">1-Step</button>
+            <button class="filter-btn" data-filter="2-step">2-Step</button>
+            <button class="filter-btn" data-filter="3-step">3-Step</button>
+            <button class="filter-btn" data-filter="instant">Instant</button>
+        </div>
+        <div class="currency-selector">
+            <label for="currency">Currency:</label>
+            <select id="currency">
+                <option value="USD">$ USD</option>
+                <option value="GBP">£ GBP</option>
+                <option value="EUR">€ EUR</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item"><span class="legend-dot restricted"></span> Restricted/No</div>
+        <div class="legend-item"><span class="legend-dot highlight"></span> New/Updated for 2026</div>
+    </div>
+
+    <div class="table-container">
+        <table id="propTable">
+            <thead>
+                <tr>
+                    <th data-sort="rank">#</th>
+                    <th data-sort="firm">Firm</th>
+                    <th data-sort="program">Program</th>
+                    <th data-sort="fee10k">Fee (10k)</th>
+                    <th data-sort="fee100k">Fee (100k)</th>
+                    <th data-sort="target">Target</th>
+                    <th data-sort="dailydd">Daily DD</th>
+                    <th data-sort="maxdd">Max DD</th>
+                    <th data-sort="ddtype">DD Type</th>
+                    <th data-sort="split">Split</th>
+                    <th data-sort="payout">Payout</th>
+                    <th data-sort="leverage">Leverage</th>
+                    <th data-sort="mindays">Min Days</th>
+                    <th data-sort="timelimit">Time Limit</th>
+                    <th data-sort="consistency">Consistency</th>
+                    <th data-sort="news">News</th>
+                    <th data-sort="weekend">Weekend</th>
+                    <th data-sort="eas">EAs</th>
+                    <th data-sort="refund">Refund</th>
+                    <th data-sort="platforms">Platforms</th>
+                    <th data-sort="notes">Notes (2026 Updates)</th>
+                    <th data-sort="sentiment">Sentiment</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- BEGINNER'S GUIDE SECTION: Program Flows & Breach Mitigation -->
+    <div class="guide-section">
+        <div class="guide-title">
+            <span>📘</span> Beginner's Guide: Program Flows & How to Avoid Breaches
+        </div>
+        <div class="guide-subtitle">
+            Understanding the exact workflow of each package type is critical to passing challenges and keeping funded accounts alive. Below is a breakdown of the four main prop firm structures and specific tips to mitigate common blow-ups.
+        </div>
+
+        <table class="guide-table">
+            <thead>
+                <tr>
+                    <th>Package Type</th>
+                    <th>Typical Flow (Phases)</th>
+                    <th>Drawdown Behavior</th>
+                    <th>Biggest Risk / Breach Trap</th>
+                    <th>Mitigation Strategy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 2-Step Challenge -->
+                <tr>
+                    <td style="font-weight: 700; color: #d4a853;">2-Step Challenge<br><span style="font-size:0.65rem; color:#9898a8;">(FTMO, FundedNext, FXIFY Classic)</span></td>
+                    <td style="text-align: left;">
+                        <span class="flow-step">Phase 1</span> → 8-10% profit target<br>
+                        <span class="flow-step">Phase 2</span> → 5% profit target<br>
+                        <span class="flow-step">Verification</span> → Funded account
+                    </td>
+                    <td>Static or Trailing (varies)<br>Max DD usually 10-12%</td>
+                    <td class="danger-text">Rushing Phase 1 and hitting daily loss limit (5%) → instant fail. Also, news trading violations.</td>
+                    <td class="success-text">✅ Trade small (0.5-1% risk per trade). ✅ Use a trading journal to track drawdown. ✅ Avoid holding through major news events unless firm allows.</td>
+                </tr>
+                <!-- 1-Step Challenge -->
+                <tr>
+                    <td style="font-weight: 700; color: #d4a853;">1-Step Challenge<br><span style="font-size:0.65rem; color:#9898a8;">(FTMO Aggressive, Alpha One, FXIFY 1-Phase)</span></td>
+                    <td style="text-align: left;">
+                        <span class="flow-step">Single Phase</span> → 8-10% target<br>
+                        <span class="flow-step">Funded</span> immediately after target
+                    </td>
+                    <td>Trailing DD (6-8%)<br>More forgiving but moves with equity</td>
+                    <td class="danger-text">❌ Trailing drawdown can "lock" you in a losing position. If you lose 3% in a day, the trail drops and you have less room.</td>
+                    <td class="success-text">✅ Scale into winning trades, don't revenge trade. ✅ Set alerts at 50% of daily loss limit. ✅ Take partial profits to lock the trail higher.</td>
+                </tr>
+                <!-- 3-Step Challenge -->
+                <tr>
+                    <td style="font-weight: 700; color: #d4a853;">3-Step Challenge<br><span style="font-size:0.65rem; color:#9898a8;">(The5ers Bootcamp, FXIFY 3-Phase)</span></td>
+                    <td style="text-align: left;">
+                        <span class="flow-step">Phase 1</span> → 5-6% target<br>
+                        <span class="flow-step">Phase 2</span> → 4-5% target<br>
+                        <span class="flow-step">Phase 3</span> → 4-5% target<br>
+                        <span class="flow-step">Funded</span>
+                    </td>
+                    <td>Static or trailing (lower DD per phase)</td>
+                    <td class="danger-text">Patience exhaustion. Many traders blow up in Phase 3 because they get impatient and over-leverage.</td>
+                    <td class="success-text">✅ Treat each phase as a separate marathon. ✅ Use the same position sizing across all phases. ✅ Don't rush — no time limits on most 3-steps.</td>
+                </tr>
+                <!-- Instant Funding -->
+                <tr style="background: var(--warning-bg);">
+                    <td style="font-weight: 700; color: #f97316;">Instant Funding<br><span style="font-size:0.65rem; color:#9898a8;">(FXIFY Instant, GoatFunded Instant, Ufunded)</span></td>
+                    <td style="text-align: left;">
+                        <span class="flow-step">Pay fee</span> → Trade live immediately<br>
+                        <span class="flow-step">First payout</span> after profit target<br>
+                        <span class="flow-step">Lock DD</span> at starting balance
+                    </td>
+                    <td>Trailing DD (4-8%) that locks at starting balance after profit target or first payout</td>
+                    <td class="danger-text">⚠️ CRITICAL: After taking a payout, your balance resets. If you withdraw all profit, the spread alone can breach your locked drawdown floor.</td>
+                    <td class="success-text">✅ Always leave a 1-2% buffer in the account after payout. ✅ Do not trade immediately after withdrawal. ✅ Understand the lock mechanism before requesting payout.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Additional Tips Box -->
+        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: 12px; border-left: 3px solid var(--accent-gold);">
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">💡 Universal Breach Prevention Tips (All Programs)</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.75rem;">
+                <div style="flex: 1; min-width: 180px;">🔹 <strong>Daily Loss Limit:</strong> Stop trading immediately when you hit 50% of daily loss. Don't chase.</div>
+                <div style="flex: 1; min-width: 180px;">🔹 <strong>Max Drawdown:</strong> Treat it as a hard floor. Never risk more than 1-2% per trade.</div>
+                <div style="flex: 1; min-width: 180px;">🔹 <strong>Consistency Rule:</strong> If firm has a 30-40% best day rule, spread profits across multiple days.</div>
+                <div style="flex: 1; min-width: 180px;">🔹 <strong>News Trading:</strong> Unless explicitly allowed, avoid trading 5 minutes before/after high-impact news.</div>
+            </div>
+        </div>
+
+        <!-- FXIFY Instant Lock Explanation (detailed) -->
+        <div style="margin-top: 1rem; padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 12px; border: 1px solid #f9731630;">
+            <div style="font-weight: 700; color: #f97316; margin-bottom: 0.5rem;">⚠️ FXIFY Instant Funding - Drawdown Lock Explained (Most Misunderstood Rule)</div>
+            <div style="font-size: 0.75rem; line-height: 1.5;">
+                <strong>How it works:</strong> Your Max Trailing Drawdown starts at <strong>-8%</strong> from starting balance (e.g., $10,000 account → $9,200 floor).<br>
+                As you profit, the floor trails upward. <strong>The lock triggers when:</strong> (a) you reach <strong>8% profit</strong> from start, OR (b) you request your <strong>first payout</strong> — whichever comes first.<br>
+                After lock, the drawdown becomes <strong>static at your original starting balance</strong> ($10,000 floor).<br><br>
+                <span class="danger-text">🚨 DEADLY TRAP: If you withdraw 100% of profits after lock, your balance resets to $10,000. The next trade's spread (1-2 pips) drops equity below $10,000 → HARD BREACH.</span><br>
+                <span class="success-text">✅ SOLUTION: Always keep at least 1-2% of profits in the account as a buffer. Withdraw 80-90% of profits only.</span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Built by Digoots • Not financial advice • Always verify current rules before purchasing</p>
+        <div class="disclaimer">
+            <strong>Disclaimer:</strong> The information presented in this comparison has been aggregated from publicly available sources, including official firm websites, community forums, and industry publications. While we strive for accuracy, proprietary trading firms frequently update their rules, pricing structures, payout policies, and platform offerings. Due to the decentralized nature of the industry and occasional discrepancies across sources, specific details may not reflect the most current terms. We strongly recommend that users independently verify all rules, fees, and conditions directly with the respective prop firm's official website before making any purchasing decisions. This comparison is provided for informational purposes only and does not constitute financial advice.
+        </div>
+    </footer>
+
+    <script>
+// ============================================
+// UPDATED DATA - APRIL 2026 VERIFIED
+// Column sorting fully functional
+// ============================================
+
+let currentCurrency = 'USD';
+let exchangeRates = { USD: 1, GBP: 0.79, EUR: 0.92 };
+let currentFilter = 'all';
+let searchTerm = '';
+let sortColumn = 'rank';
+let sortDirection = 'asc';
+
+async function fetchExchangeRates() {
+    try {
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const data = await response.json();
+        exchangeRates = { USD: 1, GBP: data.rates.GBP, EUR: data.rates.EUR };
+    } catch (error) {
+        console.warn('Using fallback rates');
+    }
+}
+
+function convertPrice(priceStr) {
+    if (!priceStr || priceStr === '-' || priceStr === 'N/A' || priceStr === '?') return priceStr;
+    const match = priceStr.match(/^([€£$]?)([\d,]+(?:\.\d+)?)(.*)/);
+    if (!match) return priceStr;
+    const [, symbol, numStr, suffix] = match;
+    const num = parseFloat(numStr.replace(/,/g, ''));
+    if (isNaN(num)) return priceStr;
+    let sourceCurrency = 'USD';
+    if (symbol === '€') sourceCurrency = 'EUR';
+    else if (symbol === '£') sourceCurrency = 'GBP';
+    const inUSD = num / exchangeRates[sourceCurrency];
+    const converted = inUSD * exchangeRates[currentCurrency];
+    const symbols = { USD: '$', GBP: '£', EUR: '€' };
+    return `${symbols[currentCurrency]}${Math.round(converted).toLocaleString()}${suffix}`;
+}
+
+const firmsData = [
+    { rank: "1", name: "C.OG", sentiment: "excellent", programs: [{ program: "Self-funded", fee10k: "-", fee100k: "-", target: "N/A", dailyDD: "N/A", maxDD: "N/A", ddType: "N/A", split: "100%", payout: "Anytime", leverage: "Broker", minDays: "0", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes", eas: "Yes", refund: "N/A", platforms: "Any", notes: "Benchmark only" }] },
+    { rank: "2", name: "FTMO", sentiment: "excellent", programs: [
+        { program: "2-Step Standard", fee10k: "€155", fee100k: "€540", target: "P1:10% P2:5%", dailyDD: "5%", maxDD: "10%", ddType: "Static", split: "80%→90%", payout: "14d then OD", leverage: "1:100", minDays: "4", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Swing only", eas: "Yes", refund: "Yes (1st)", platforms: "MT4/5, cTrader", notes: "Scaling: +25% every 4 months" },
+        { program: "1-Step Aggressive", fee10k: "€185", fee100k: "€640", target: "10%", dailyDD: "3%", maxDD: "6% trailing", ddType: "Trailing EOD", split: "90%", payout: "14d then OD", leverage: "1:100", minDays: "2", timeLimit: "∞", consistency: "50% Best Day", news: "Yes", weekend: "Swing only", eas: "Yes", refund: "Yes (1st)", platforms: "MT4/5, cTrader", notes: "Best Day rule active" }
+    ]},
+    { rank: "3", name: "The5ers", sentiment: "excellent", programs: [
+        { program: "High Stakes (2-Step)", fee10k: "$78", fee100k: "$545", target: "P1:8% P2:5%", dailyDD: "5%", maxDD: "10%", ddType: "Static", split: "80%→100%", payout: "14d/Bi-wkly", leverage: "1:100", minDays: "3 profit", timeLimit: "∞", consistency: "3 profit days", news: "2min buffer", weekend: "Yes (swap)", eas: "Yes", refund: "Yes (1st)", platforms: "MT5, cTrader", notes: "Scaling to $4M" },
+        { program: "Bootcamp (3-Step)", fee10k: "N/A", fee100k: "$300", target: "6% each", dailyDD: "None", maxDD: "5%→4%", ddType: "Trailing (anchor)", split: "50%→100%", payout: "14d/Bi-wkly", leverage: "1:30", minDays: "0", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes (swap)", eas: "Yes", refund: "On funding", platforms: "MT5, cTrader", notes: "⚠️ Trailing DD anchored to initial balance" },
+        { program: "Hyper Growth (1-Step)", fee10k: "$98", fee100k: "N/A (40k)", target: "10%", dailyDD: "3%", maxDD: "6%", ddType: "Static", split: "50%→100%", payout: "14d/Bi-wkly", leverage: "1:30", minDays: "3 profit", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes (swap)", eas: "Yes", refund: "Yes (1st)", platforms: "MT5, cTrader", notes: "Doubles at 10% profit" }
+    ]},
+    { rank: "4", name: "FundedNext", sentiment: "good", programs: [
+        { program: "Stellar 2-Step", fee10k: "$59", fee100k: "$549", target: "P1:8% P2:5%", dailyDD: "5%", maxDD: "10%", ddType: "Static", split: "80%→90%", payout: "21d/14d", leverage: "1:100", minDays: "5", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes", eas: "Yes (+fee)", refund: "Yes (1st)", platforms: "MT4/5, cTrader, Match", notes: "15% challenge profit" },
+        { program: "Stellar 1-Step", fee10k: "$59", fee100k: "$549", target: "10%", dailyDD: "3%", maxDD: "6%", ddType: "Static", split: "80%→90%", payout: "5 bus days", leverage: "1:30", minDays: "5", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes", eas: "Yes (+fee)", refund: "Yes (3rd)", platforms: "MT4/5, cTrader, Match", notes: "⚠️ Min 5 trading days (not 2)" },
+        { program: "Stellar Lite", fee10k: "$49", fee100k: "$449", target: "P1:8% P2:4%", dailyDD: "4%", maxDD: "8%", ddType: "Static", split: "80%→90%", payout: "21d/14d", leverage: "1:100", minDays: "5", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes", eas: "Yes (+fee)", refund: "Yes (3rd)", platforms: "MT4/5, cTrader, Match", notes: "Max DD 8% (not 10%)" }
+    ]},
+    { rank: "5", name: "FXIFY", sentiment: "good", programs: [
+        { program: "2-Phase Standard", fee10k: "$89", fee100k: "$549", target: "P1:10% P2:5%", dailyDD: "4%", maxDD: "10%", ddType: "Static", split: "80%→90%", payout: "OD 1st/30d", leverage: "1:30", minDays: "5", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes", eas: "Yes", refund: "Yes (125%)", platforms: "MT4/5, DXTrade, TradingView", notes: "14d add-on avail" },
+        { program: "Lightning", fee10k: "$59", fee100k: "$399", target: "5%", dailyDD: "3%", maxDD: "4% trail", ddType: "Trailing", split: "80%→90%", payout: "7d/Bi-wkly", leverage: "1:30", minDays: "3", timeLimit: "7 days", consistency: "30%", news: "NO", weekend: "NO", eas: "NO", refund: "No", platforms: "MT5, TradingView", notes: "🚫 NO weekend holding, fastest eval" }
+    ]},
+    { rank: "6", name: "Alpha Capital", sentiment: "good", programs: [
+        { program: "Alpha Pro 10% (2-Step)", fee10k: "$40", fee100k: "$497", target: "P1:10% P2:5%", dailyDD: "5%", maxDD: "10%", ddType: "Static", split: "80%", payout: "On-demand/Bi-wk", leverage: "1:100", minDays: "3", timeLimit: "∞", consistency: "40% (OD)", news: "4min buffer", weekend: "Swing only", eas: "Yes", refund: "No", platforms: "MT5, cTrader, DXTrade, TradeLocker", notes: "Best value Alpha" },
+        { program: "Alpha One (1-Step)", fee10k: "$67", fee100k: "$497", target: "10%", dailyDD: "4%", maxDD: "6% trail", ddType: "Trailing", split: "80%", payout: "On-demand", leverage: "1:50", minDays: "1", timeLimit: "∞", consistency: "40% (OD)", news: "10min buffer", weekend: "Yes", eas: "Yes", refund: "No", platforms: "MT5, cTrader, DXTrade, TradeLocker", notes: "Locks at 6% trailing" }
+    ]},
+    { rank: "7", name: "GoatFunded", sentiment: "good", programs: [
+        { program: "2-Step Standard", fee10k: "$53", fee100k: "$338", target: "P1:8% P2:6%", dailyDD: "5%", maxDD: "10%", ddType: "Static", split: "80%→100%", payout: "Bi-weekly", leverage: "1:100", minDays: "3", timeLimit: "∞", consistency: "None", news: "1% cap", weekend: "Yes", eas: "Yes", refund: "Yes (4th)", platforms: "TradeLocker, Match", notes: "Scaling: 4 levels" }
+    ]},
+    { rank: "8", name: "Topstep", sentiment: "good", programs: [
+        { program: "Combine 50K", fee10k: "$49/mo", fee100k: "-", target: "$3,000", dailyDD: "Scales", maxDD: "$2k EOD", ddType: "EOD Trail", split: "90%", payout: "5 wins req", leverage: "Contracts", minDays: "5 wins", timeLimit: "∞ (sub)", consistency: "40%", news: "Yes", weekend: "NO", eas: "No", refund: "+$149 act", platforms: "TopstepX only", notes: "⚠️ SINCE JAN 2026: 90/10 split from dollar one" },
+        { program: "Combine 150K", fee10k: "-", fee100k: "$149/mo", target: "$9,000", dailyDD: "Scales", maxDD: "$4.5k EOD", ddType: "EOD Trail", split: "90%", payout: "5 wins req", leverage: "Contracts", minDays: "5 wins", timeLimit: "∞ (sub)", consistency: "40%", news: "Yes", weekend: "NO", eas: "No", refund: "+$149 act", platforms: "TopstepX only", notes: "First $10k 100% rule REMOVED" }
+    ]},
+    { rank: "9", name: "FundingPips", sentiment: "mixed", programs: [
+        { program: "2-Step Standard", fee10k: "$36", fee100k: "$289", target: "P1:8% P2:5%", dailyDD: "5%", maxDD: "10%", ddType: "Static", split: "60%→100%", payout: "7d/14d/30d", leverage: "1:100", minDays: "3", timeLimit: "∞", consistency: "35% (OD)", news: "Restricted", weekend: "Yes", eas: "Risk only", refund: "Yes (4th)", platforms: "MT5, cTrader, Match, TradeLocker", notes: "Split by frequency" },
+        { program: "Zero (Instant)", fee10k: "$69", fee100k: "$299", target: "None", dailyDD: "3%", maxDD: "5% trailing", ddType: "Trailing", split: "95%", payout: "Bi-weekly", leverage: "1:50", minDays: "7 profit", timeLimit: "∞", consistency: "15%", news: "5min buffer", weekend: "NO", eas: "Risk only", refund: "No", platforms: "MT5, cTrader, Match, TradeLocker", notes: "🔥 95% split, 1% float cap" }
+    ]},
+    { rank: "10", name: "RebelsFunding", sentiment: "good", programs: [
+        { program: "2-Step Unlimited", fee10k: "$49", fee100k: "$399", target: "8% / 5%", dailyDD: "4%", maxDD: "8%", ddType: "Static", split: "80%→90%", payout: "Weekly", leverage: "1:50", minDays: "4", timeLimit: "∞", consistency: "30% best day", news: "Yes", weekend: "Yes", eas: "Yes", refund: "Yes (fee)", platforms: "MT5, TradeLocker", notes: "✅ No time limits, fast payouts" }
+    ]},
+    { rank: "11", name: "OneFunded", sentiment: "excellent", programs: [
+        { program: "OF Core 2-Step", fee10k: "$69", fee100k: "$549", target: "P1:8% P2:5%", dailyDD: "4%", maxDD: "8%", ddType: "Static", split: "80%→90%", payout: "Bi-weekly/OD", leverage: "1:50", minDays: "3", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes", eas: "Yes", refund: "Yes (fee)", platforms: "MT5, cTrader, TradeLocker", notes: "✅ Unlimited time, scaling to $2M+" },
+        { program: "OF Flash 1-Step", fee10k: "$99", fee100k: "$799", target: "8%", dailyDD: "5%", maxDD: "8% trailing", ddType: "Trailing", split: "90%", payout: "Weekly", leverage: "1:30", minDays: "5", timeLimit: "∞", consistency: "40% best day", news: "Yes", weekend: "Yes", eas: "Yes", refund: "No", platforms: "MT5, cTrader", notes: "Fastest path, instant payouts" }
+    ]},
+    { rank: "12", name: "BrightFunded", sentiment: "excellent", programs: [
+        { program: "2-Step Classic", fee10k: "$59", fee100k: "$499", target: "8% / 5%", dailyDD: "4%", maxDD: "8%", ddType: "Static", split: "80%→100%", payout: "14d / OD", leverage: "1:100", minDays: "4", timeLimit: "∞", consistency: "None", news: "Yes", weekend: "Yes", eas: "Yes", refund: "Yes (1st)", platforms: "MT5, DXtrade, cTrader", notes: "Trade2Earn loyalty, uncapped scaling" },
+        { program: "1-Step Prime", fee10k: "$79", fee100k: "$649", target: "10%", dailyDD: "3%", maxDD: "6% trailing", ddType: "Trailing", split: "90%", payout: "Bi-weekly", leverage: "1:50", minDays: "5", timeLimit: "∞", consistency: "30% best day", news: "Yes", weekend: "Yes", eas: "Yes", refund: "Yes", platforms: "MT5, cTrader, DXtrade", notes: "In-house tech, high payouts" }
+    ]}
+];
+
+function renderTable() {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    
+    let filteredFirms = firmsData.filter(firm => {
+        let filteredPrograms = firm.programs;
+        
+        if (currentFilter !== 'all') {
+            filteredPrograms = firm.programs.filter(prog => {
+                const progName = prog.program.toLowerCase();
+                if (currentFilter === '1-step') return progName.includes('1-step') || progName.includes('1-phase') || progName.includes('hyper growth') || progName.includes('alpha one') || progName.includes('flash');
+                if (currentFilter === '2-step') return progName.includes('2-step') || progName.includes('2-phase') || progName.includes('high stakes') || progName.includes('stellar 2') || progName.includes('core');
+                if (currentFilter === '3-step') return progName.includes('3-step') || progName.includes('bootcamp');
+                if (currentFilter === 'instant') return progName.includes('instant') || progName.includes('zero');
+                return true;
+            });
+            if (filteredPrograms.length === 0) return false;
+        }
+        
+        if (searchTerm) {
+            filteredPrograms = filteredPrograms.filter(prog => {
+                const searchable = `${firm.name} ${prog.program} ${prog.platforms} ${prog.notes}`.toLowerCase();
+                return searchable.includes(searchTerm);
+            });
+            if (filteredPrograms.length === 0) return false;
+        }
+        
+        firm._filteredPrograms = filteredPrograms;
+        return true;
+    });
+    
+    filteredFirms.sort((a, b) => {
+        let valA, valB;
+        if (sortColumn === 'rank') {
+            valA = parseInt(a.rank) || 999;
+            valB = parseInt(b.rank) || 999;
+        } else if (sortColumn === 'firm') {
+            valA = a.name.toLowerCase();
+            valB = b.name.toLowerCase();
+        } else if (sortColumn === 'sentiment') {
+            const order = { excellent: 5, good: 4, mixed: 3 };
+            valA = order[a.sentiment] || 0;
+            valB = order[b.sentiment] || 0;
+        } else {
+            valA = a.programs[0][sortColumn]?.toLowerCase() || '';
+            valB = b.programs[0][sortColumn]?.toLowerCase() || '';
+        }
+        if (sortDirection === 'asc') return valA > valB ? 1 : -1;
+        return valA < valB ? 1 : -1;
+    });
+    
+    filteredFirms.forEach(firm => {
+        const programsToRender = firm._filteredPrograms || firm.programs;
+        programsToRender.forEach((prog, idx) => {
+            const tr = document.createElement('tr');
+            if (idx === 0) tr.classList.add('firm-header');
+            const fee10kConv = convertPrice(prog.fee10k);
+            const fee100kConv = convertPrice(prog.fee100k);
+            tr.innerHTML = `
+                <td>${idx === 0 ? firm.rank : ''}</td>
+                <td>${idx === 0 ? `<span class="firm-name">${firm.name}</span>` : ''}</td>
+                <td class="program-name">${prog.program}</td>
+                <td class="fee">${fee10kConv}</td>
+                <td class="fee">${fee100kConv}</td>
+                <td>${prog.target}</td>
+                <td>${prog.dailyDD}</td>
+                <td>${prog.maxDD}</td>
+                <td>${prog.ddType}</td>
+                <td>${prog.split}</td>
+                <td>${prog.payout}</td>
+                <td>${prog.leverage}</td>
+                <td>${prog.minDays}</td>
+                <td>${prog.timeLimit}</td>
+                <td>${prog.consistency}</td>
+                <td class="${prog.news === 'NO' ? 'cell-restricted' : ''}">${prog.news}</td>
+                <td class="${prog.weekend === 'NO' ? 'cell-restricted' : ''}">${prog.weekend}</td>
+                <td>${prog.eas}</td>
+                <td>${prog.refund}</td>
+                <td>${prog.platforms}</td>
+                <td style="font-size:0.7rem; max-width:180px;">${prog.notes}</td>
+                <td><span class="sentiment ${firm.sentiment}">${firm.sentiment === 'excellent' ? 'Excellent' : firm.sentiment === 'good' ? 'Good' : 'Mixed'}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    });
+}
+
+document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+        const col = th.dataset.sort;
+        if (sortColumn === col) sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        else { sortColumn = col; sortDirection = 'asc'; }
+        document.querySelectorAll('th').forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+        th.classList.add(sortDirection === 'asc' ? 'sorted-asc' : 'sorted-desc');
+        renderTable();
+    });
+});
+
+document.getElementById('search').addEventListener('input', (e) => { searchTerm = e.target.value.toLowerCase(); renderTable(); });
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderTable();
+    });
+});
+document.getElementById('currency').addEventListener('change', async (e) => { currentCurrency = e.target.value; await fetchExchangeRates(); renderTable(); });
+
+async function init() { await fetchExchangeRates(); renderTable(); }
+init();
+    </script>
+</body>
+</html>
